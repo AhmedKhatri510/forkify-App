@@ -2,9 +2,14 @@ import * as model from './model.js';
 // import icons from '../img/icons.svg'; //parcel 1
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultView from './views/resultView.js';
 
 import 'core-js/stable';
 import { initial } from 'lodash';
+
+if (module.hot) {
+  module.hot.accept();
+}
 
 const controlRecipe = async function () {
   try {
@@ -25,6 +30,7 @@ const controlRecipe = async function () {
 
 const controlLoadSearchResults = async function () {
   try {
+    resultView.renderSpinner();
     //1) get the query
     const query = searchView.getQuery();
     if (!query) return;
@@ -33,7 +39,8 @@ const controlLoadSearchResults = async function () {
     await model.loadSearchResults(query);
 
     //3) render the query
-    console.log(model.state.search.results);
+
+    resultView.render(model.state.search.results);
   } catch (err) {
     console.error(err);
   }
