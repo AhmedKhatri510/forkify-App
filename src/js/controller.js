@@ -3,6 +3,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 
 import 'core-js/stable';
+import { initial } from 'lodash';
 
 // console.log(icons);
 
@@ -29,8 +30,11 @@ const controlRecipe = async function () {
   }
 };
 
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipe)
-);
+//Subcriber -> publisher (addHandlerrender)
+const init = function () {
+  recipeView.addHandlerrender(controlRecipe);
+};
+
+init();
 // window.addEventListener('hashchange', controlRecipe);
 // window.addEventListener('load', controlRecipe);
