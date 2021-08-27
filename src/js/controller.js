@@ -7,9 +7,9 @@ import resultView from './views/resultView.js';
 import 'core-js/stable';
 import { initial } from 'lodash';
 
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 const controlRecipe = async function () {
   try {
@@ -40,7 +40,8 @@ const controlLoadSearchResults = async function () {
 
     //3) render the query
 
-    resultView.render(model.state.search.results);
+    // resultView.render(model.state.search.results);
+    resultView.render(model.getSearchResultsPage());
   } catch (err) {
     console.error(err);
   }
