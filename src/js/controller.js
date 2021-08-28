@@ -3,6 +3,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultView from './views/resultView.js';
+import paginationView from './views/paginationView.js';
 
 import 'core-js/stable';
 import { initial } from 'lodash';
@@ -38,19 +39,31 @@ const controlLoadSearchResults = async function () {
     //2) load the search results
     await model.loadSearchResults(query);
 
-    //3) render the query
-
+    //3) render the results
     // resultView.render(model.state.search.results);
     resultView.render(model.getSearchResultsPage());
+
+    //4) Render initial Pagination buttons
+    paginationView.render(model.state.search);
   } catch (err) {
     console.error(err);
   }
+};
+
+const controlPagination = function (gotoPage) {
+  //1) render NEW results
+
+  resultView.render(model.getSearchResultsPage(gotoPage));
+
+  //4) Render NEW Pagination buttons
+  paginationView.render(model.state.search);
 };
 
 //Subcriber -> publisher (addHandlerrender)
 const init = function () {
   recipeView.addHandlerrender(controlRecipe);
   searchView.addHandlerSearch(controlLoadSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 
 init();
