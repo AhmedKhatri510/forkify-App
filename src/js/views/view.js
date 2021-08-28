@@ -2,6 +2,7 @@ import icons from '../../img/icons.svg'; //parcel 1
 
 export default class View {
   _data;
+
   render(data) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
@@ -28,14 +29,14 @@ export default class View {
     newElement.forEach((newEl, i) => {
       const curEl = curElement[i];
 
-      console.log(curEl, newEl.isEqualNode(curEl));
+      //   console.log(curEl, newEl.isEqualNode(curEl));
 
       //update change text
       if (
         !newEl.isEqualNode(curEl) &&
         newEl.firstChild?.nodeValue.trim() !== ''
       ) {
-        console.log('💥', newEl.firstChild.nodeValue);
+        console.log('💥', newEl.firstChild?.nodeValue);
         curEl.textContent = newEl.textContent;
       }
 
