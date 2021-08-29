@@ -4,6 +4,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultView from './views/resultView.js';
 import paginationView from './views/paginationView.js';
+import bookmarkView from './views/bookmarkView.js';
 
 import 'core-js/stable';
 import { initial } from 'lodash';
@@ -20,7 +21,7 @@ const controlRecipe = async function () {
     recipeView.renderSpinner();
     //0) update result view to mark selected search results
     resultView.update(model.getSearchResultsPage());
-
+    bookmarkView.update(model.state.bookmarks);
     //1) loading the recipes
     await model.loadRecipe(id);
 
@@ -72,12 +73,16 @@ const controlServing = function (newServing) {
 };
 
 const controlAddBookmark = function () {
+  //1)Add/remove bookmark
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.removeBookmark(model.state.recipe.id);
 
   // model.addBookmark(model.state.recipe);
-  console.log(model.state.recipe);
+  //2)Update recipe view
   recipeView.update(model.state.recipe);
+
+  //3)Render the bookmark
+  bookmarkView.render(model.state.bookmarks);
 };
 
 //Subcriber -> publisher (addHandlerrender)
