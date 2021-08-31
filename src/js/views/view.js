@@ -26,8 +26,6 @@ export default class View {
     const newElement = Array.from(newDOM.querySelectorAll('*'));
     const curElement = Array.from(this._parentEl.querySelectorAll('*'));
 
-    console.log(curElement, newElement);
-
     newElement.forEach((newEl, i) => {
       const curEl = curElement[i];
 
@@ -38,13 +36,11 @@ export default class View {
         !newEl.isEqualNode(curEl) &&
         newEl.firstChild?.nodeValue.trim() !== ''
       ) {
-        console.log('💥', newEl.firstChild?.nodeValue);
         curEl.textContent = newEl.textContent;
       }
 
       //update change attribute
       if (!newEl.isEqualNode(curEl)) {
-        console.log(Array.from(newEl.attributes));
         Array.from(newEl.attributes).forEach(attr =>
           curEl.setAttribute(attr.name, attr.value)
         );
